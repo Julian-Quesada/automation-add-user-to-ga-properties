@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "declaration": true,
+	"incremental": true
+  },
+  "include": [
+    "./src",
+    "./test"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./dist",
+    "./input",
+	"./runs"
+  ]
+}

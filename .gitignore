@@ -1,0 +1,10 @@
+**/runs
+*credential_pool.json
+*project_keys.json
+**/dist
+**/node_modules
+*.csv
+**/.vscode
+.DS_Store
+**.DS_Store
+**/.DS_Store

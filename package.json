@@ -1,0 +1,31 @@
+{
+  "name": "automation-delete-campaign-data-imports",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "relink": "npm link ../../api-schema-utils",
+	"debug": "node --enable-source-maps ./dist/execute_plan.js --dir=runs/nestle-aus-nz-2022-07-11",
+	"plan": "npx tsc && node --enable-source-maps ./dist/plan.js",
+	"execute": "npx tsc && node --enable-source-maps ./dist/execute_plan.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Infotrust-llc/automation-delete-campaign-data-imports.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Infotrust-llc/automation-delete-campaign-data-imports/issues"
+  },
+  "homepage": "https://github.com/Infotrust-llc/automation-delete-campaign-data-imports#readme",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  },
+  "dependencies": {
+    "api-schema-utils": "file:../../api-schema-utils"
+  }
+}
