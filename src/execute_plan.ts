@@ -58,11 +58,10 @@ for (let entry of plan){
 			output.log(entry);
 			continue;
 		}
-		if (entry.propertyId.match(/^UA.+/)){
+		if (entry.propertyId.match(/^UA.+/)){ //Universal Analytics
 			await createGAPropertyUser(entry.accountId,entry.propertyId,entry.emailAddress,entry.propertyPermissions.split(','));
-		} else {
-			let ga4Response = await createGA4PropertyUser(entry.accountId,entry.propertyId,entry.emailAddress,entry.propertyPermissions.split(','));
-			console.log(ga4Response);
+		} else { //GA4
+			await createGA4PropertyUser(entry.accountId,entry.propertyId,entry.emailAddress,entry.propertyPermissions.split(','));
 		}
 		console.log(`SUCCESS -- Account: ${entry.accountId}, Property: ${entry.propertyId}, Email: ${entry.emailAddress}`);
 		entry.status = 'success'
