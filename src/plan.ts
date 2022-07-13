@@ -108,7 +108,7 @@ const csv = await readCSV('input.csv');
 const users = csv.filter(item => item.emailAddress);
 
 console.log('Getting Account IDs');
-if (accountsAndProperties === undefined/*  && !(accountIdKey in csv[0]) */){
+if (accountsAndProperties === undefined && !(accountIdKey in csv[0])){
 	const summaries = await getAccountSummaries();
 	const allProperties = csv.map(row => row.gaProperty.toUpperCase().trim().replace(/[^a-zA-Z0-9\-]/,''));
 	const filteredAccounts = [];
