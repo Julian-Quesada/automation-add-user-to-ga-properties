@@ -22,13 +22,22 @@ export async function getGA4AccountSummaries(){
 				return response.data;
 			});
 			for (let account of allResults){
-				if (accountMap.has(account.account)) continue;
-				account.id = account.account.replace(/accounts\//,'');
-				for (let property of account.propertySummaries || []){
-					property.id = property.property.replace(/properties\//,'');
+				if (!accountMap.has(account.account)){
+					account.id = account.account.replace(/accounts\//,'');
+					for (let property of account.propertySummaries || []){
+						property.id = property.property.replace(/properties\//,'');
+					}
+					account.webProperties = account.propertySummaries || [];
+					accountMap.set(account.account,account);
 				}
-				account.webProperties = account.propertySummaries || [];
-				accountMap.set(account.account,account);
+				let curAccount = accountMap.get(account.account);
+				if (!curAccount.propertyMap) curAccount.propertyMap = new Map();
+				let propertyMap = curAccount.propertyMap;
+				let properties = curAccount.propertySummaries || [];
+				for (let property of properties){
+					if (!propertyMap.has(property.property)) propertyMap.set(property.property,property);
+				}
+				curAccount.webProperties = Array.from(propertyMap.values());
 			}
 		} catch (e) {
 			if (e?.message?.match(/no.+credential.+found/gi)){

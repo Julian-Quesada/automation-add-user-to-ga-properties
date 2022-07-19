@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "relink": "npm link ../../api-schema-utils",
-	"debug": "node --enable-source-maps ./dist/execute_plan.js --dir=runs/nestle-aus-nz-2022-07-11",
+	"debug": "node --enable-source-maps ./dist/execute_plan.js --dir=runs/pf-zadv-2022-07-15 --rerun=true",
 	"plan": "npx tsc && node --enable-source-maps ./dist/plan.js",
 	"execute": "npx tsc && node --enable-source-maps ./dist/execute_plan.js"
   },

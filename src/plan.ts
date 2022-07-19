@@ -76,8 +76,17 @@ async function getAccountSummaries(){
 				return response.data;
 			});
 			for (let account of allResults){
-				if (accountMap.has(account.id)) continue;
-				accountMap.set(account.id,account);
+				if (!accountMap.has(account.id)){
+					accountMap.set(account.id,account);
+				}
+				let curAccount = accountMap.get(account.id);
+				if (!curAccount.propertyMap) curAccount.propertyMap = new Map();
+				let propertyMap = curAccount.propertyMap;
+				let properties = curAccount.webProperties || [];
+				for (let property of properties){
+					if (!propertyMap.has(property.id)) propertyMap.set(property.id,property);
+				}
+				curAccount.webProperties = Array.from(propertyMap.values());
 			}
 		} catch (e) {
 			if (e?.message?.match(/no.+credential.+found/gi)){
@@ -86,7 +95,6 @@ async function getAccountSummaries(){
 				throw e;
 			}
 		}
-		
 	}
 	let ga4Summaries = await getGA4AccountSummaries();
 	return Array.from(accountMap.values()).concat(ga4Summaries);
@@ -134,7 +142,7 @@ console.log('Generating Plan');
 const planOutput = new CSVLogger('planOutput.csv');
 for (let row of csv){
 	for (let user of users){
-		row.gaProperty = row.gaProperty.toUpperCase().trim().replace(/[^a-zA-Z0-9\-]/,'');
+		row.gaProperty = row.gaProperty.toUpperCase().trim().replace(/[^a-zA-Z0-9\-]/g,'');
 		const account = accountsAndProperties?.find(item => item.property === row.gaProperty)?.accountId;
 		let rowPermissions;
 		if (row.gaProperty.match(/^UA.+/)){ //Universal Analytics
@@ -143,7 +151,7 @@ for (let row of csv){
 			rowPermissions = `predefinedRoles/${user.permissions}`;
 		}
 		let lineToLog = {
-			emailAddress: user.emailAddress,
+			emailAddress: user.emailAddress.replace(/\n\s\t/g,''),
 			accountId: account || row.accountId || 'unableToAccess',
 			// accountPermissions: permissions[user.permissions],
 			propertyId: row.gaProperty,
